@@ -12,7 +12,7 @@ Weather Hook for Discord and Slack
   - Discord : axios, node-schedule,discord.js
   - Slack : axios, node-schedule
 
-## Required
+## Required and Settings
 
 ### Open Weather Map API Key
 - [Open Weather Map](https://openweathermap.org/) API Key가 요구됩니다.
@@ -32,6 +32,17 @@ Weather Hook for Discord and Slack
         "your_slack_or_discord_webhook_url" : "region"
    }
   ```
+
+### Setting Scheduler
+
+- 알림을 받고 싶은 주기를 설정해야합니다.
+- 각 플랫폼의 config.json에 있는 "scheduler_expression" 필드에 crontab expression으로 주기를 설정해 주어야 합니다
+
+  ```
+  "scheduler_expression":"* * * * * *"
+  ```
+
+- Crontab작성시 도움이 되는 사이트 : https://crontab.guru/
 ***
 ## 아래와 같이 동작합니다
 ### Discord
