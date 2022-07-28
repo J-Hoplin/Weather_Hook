@@ -25,7 +25,7 @@ const buildEmbedJSONByRegion = (dataBox) => {
             "embeds" : [
                 {
                     "title": `${data.locale_name}시 현재 날씨정보`,
-                    "description" : `측정시간 : ${addZeroUnderTen(measureTimeToDate.getFullYear())}년 ${addZeroUnderTen(measureTimeToDate.getMonth() + 1)}월 ${addZeroUnderTen(measureTimeToDate.getDate())}일 ${addZeroUnderTen(measureTimeToDate.getHours())} : ${addZeroUnderTen(measureTimeToDate.getMinutes())}시 ${addZeroUnderTen(measureTimeToDate.getSeconds())}분`,
+                    "description" : `측정시간 : ${addZeroUnderTen(measureTimeToDate.getFullYear())}년 ${addZeroUnderTen(measureTimeToDate.getMonth() + 1)}월 ${addZeroUnderTen(measureTimeToDate.getDate())}일 ${addZeroUnderTen(measureTimeToDate.getHours())} : ${addZeroUnderTen(measureTimeToDate.getMinutes())} : ${addZeroUnderTen(measureTimeToDate.getSeconds())}`,
                     "color" : 16776960,
                     "thumbnail" : {
                         "url" : data.weather_icon
@@ -88,7 +88,7 @@ const buildEmbedJSONByRegion = (dataBox) => {
                 },
                 {
                     "title": `${data.locale_name}시 현재 대기정보`,
-                    "description" : `측정시간 : ${addZeroUnderTen(measuredTimeAirPollution.getFullYear())}년 ${addZeroUnderTen(measuredTimeAirPollution.getMonth() + 1)}월 ${addZeroUnderTen(measuredTimeAirPollution.getDate())}일 ${addZeroUnderTen(measuredTimeAirPollution.getHours())} : ${addZeroUnderTen(measuredTimeAirPollution.getMinutes())}시 ${addZeroUnderTen(measuredTimeAirPollution.getSeconds())}분`,
+                    "description" : `측정시간 : ${addZeroUnderTen(measuredTimeAirPollution.getFullYear())}년 ${addZeroUnderTen(measuredTimeAirPollution.getMonth() + 1)}월 ${addZeroUnderTen(measuredTimeAirPollution.getDate())}일 ${addZeroUnderTen(measuredTimeAirPollution.getHours())} : ${addZeroUnderTen(measuredTimeAirPollution.getMinutes())} : ${addZeroUnderTen(measuredTimeAirPollution.getSeconds())}`,
                     "color" : 16776960,
                     "fields" : [
                         {
