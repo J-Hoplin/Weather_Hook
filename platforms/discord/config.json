@@ -1,0 +1,6 @@
+{
+    "scheduler_expression":"* * * * * *",
+    "weather_hooks_endpoints" : {
+        "your_discord_web_hook_url" : "region"
+    }
+}
