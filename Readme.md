@@ -46,7 +46,8 @@ Weather Hook for Discord and Slack
 ***
 ## 아래와 같이 동작합니다
 ### Discord
-<img src = "https://github.com/J-hoplin1/Weather_Hook/blob/main/imgs/discord.png?raw=true" width="50%" height="50%"> 
+<img src = "https://user-images.githubusercontent.com/45956041/181906118-326a57b6-851e-4cf8-b69d-cf19fc66f656.png" width="50%" height="50%"> 
 
 ### Slack
-<img src = "https://github.com/J-hoplin1/Weather_Hook/blob/main/imgs/slack.png?raw=true" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/45956041/181906077-1de749f7-37ae-4f8b-b13c-3ea72ade45f0.png" width="50%" height="50%"> 
+
