@@ -1,7 +1,7 @@
 Weather Hook for Discord and Slack
 ===
 ***
-**[Discord](https://discord.com/)와 [Slack](https://slack.com/intl/ko-kr/) 플랫폼을 위한 웹훅 애플리케이션 소스코드입니다**
+**[Discord](https://discord.com/)와 [Slack](https://slack.com/intl/ko-kr/) 플랫폼을 위한 날씨정보 웹훅 애플리케이션 소스코드입니다**
 ***
 ## JavaScript Module Dependency
 
