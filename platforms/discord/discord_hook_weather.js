@@ -114,6 +114,28 @@ const buildEmbedJSONByRegion = (dataBox) => {
                 }
             ]
         }
+        // If rain -> Add rain per hr field
+        data.rain_per_hour 
+        ?(() => {
+            JSONform.embeds[0].fields.push(
+                {
+                    "name" : "시간당 강수량",
+                    "value" : `${data.rain_per_hour} mm/hr`,
+                }
+            )
+        })() 
+        : true
+        // If snow -> Add snow per hr field
+        data.data.snow_per_hour
+        ? (() => {
+            JSONform.embeds[0].fields.push(
+                {
+                    "name" : "시간당 적설량",
+                    "value" : `${data.data.snow_per_hour} mm/hr`,
+                }
+            )
+        })()
+        : true
         return JSONform
     }catch(err){
         console.log(err)

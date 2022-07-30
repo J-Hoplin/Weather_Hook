@@ -18,7 +18,7 @@ const textBox = async (cityName,capsule) => {
         const integerStringFilter = (number) => {
             return number < 10 ?  "0" + number : number.toString()
         }
-
+        
         const textbox = `*[  ${data.locale_name}시 현재날씨  |   측정시간 : ${measureTimeToDate.getFullYear()}년 ${integerStringFilter(measureTimeToDate.getMonth() + 1)}월 ${integerStringFilter(measureTimeToDate.getDate())}일 ${integerStringFilter(measureTimeToDate.getHours())} : ${integerStringFilter(measureTimeToDate.getMinutes())} : ${integerStringFilter(measureTimeToDate.getSeconds())}  ]*\n
     - *날씨* : ${data.weather}(${data.description})\n
     - *온도* : ${data.temperature}℃ (체감온도 : ${data.temperature_humanfeel}℃)\n
