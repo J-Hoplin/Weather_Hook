@@ -123,10 +123,10 @@ const buildEmbedJSONByRegion = (dataBox) => {
                     "value" : `${data.rain_per_hour} mm/hr`,
                 }
             )
-        })() 
+        })()
         : true
         // If snow -> Add snow per hr field
-        data.data.snow_per_hour
+        data.snow_per_hour
         ? (() => {
             JSONform.embeds[0].fields.push(
                 {

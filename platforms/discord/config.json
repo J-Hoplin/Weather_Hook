@@ -1,6 +1,6 @@
 {
     "scheduler_expression":"* * * * * *",
     "weather_hooks_endpoints" : {
-        "https://ptb.discord.com/api/webhooks/1001854734224867449/_-pX82gvdWePhB-v4tDsCxYY1ugWxmj3OUjxe6m0-Nnfrpiiqfd6lTkCFLTjajqxEbRZ" : "daejeon"
+        "your_discord_webhook_url" : "region"
     }
 }

@@ -1,6 +1,6 @@
 {
     "scheduler_expression":"* * * * * *",
     "weather_hooks_endpoints" : {
-        "https://hooks.slack.com/services/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" : "daejeon"
+        "your_slack_webhook_url" : "region"
     }
 }
