@@ -2,9 +2,9 @@ const schedule = require('node-schedule')
 const axios = require('axios')
 const config = require('./config.json')
 const common = require('../common.json')
-const { getAllSupportedRegion } = require('../../Hooks/data')
+const { getAllSupportedRegion, getWeatherInfo } = require('../../Hooks/data')
 
-const textBox = async (cityName,capsule) => {
+const textBox = (cityName,capsule) => {
     let payload;
     try{
         const { code, data } = capsule
@@ -22,7 +22,7 @@ const textBox = async (cityName,capsule) => {
         const attachBox = {
             "attachments" : [
                 {
-                    "title" : `${data.locale_name}시 현재 날씨정보`,
+                    "title" : `${data.locale_name} 현재 날씨정보`,
                     "color" : "#FFFF00",
                     "text" : `측정시간 : ${integerStringFilter(measureTimeToDate.getFullYear())}년 ${integerStringFilter(measureTimeToDate.getMonth() + 1)}월 ${integerStringFilter(measureTimeToDate.getDate())}일 ${integerStringFilter(measureTimeToDate.getHours())} : ${integerStringFilter(measureTimeToDate.getMinutes())} : ${integerStringFilter(measureTimeToDate.getSeconds())}\n데이터 출처 : https://openweathermap.org/`,
                     "fields" : [
@@ -77,7 +77,7 @@ const textBox = async (cityName,capsule) => {
                     "footer_icon" : "https://avatars.githubusercontent.com/u/45956041?v=4"
                 },
                 {
-                    "title" : `${data.locale_name}시 현재 대기정보`,
+                    "title" : `${data.locale_name} 현재 대기정보`,
                     "color" : "#FFFF00",
                     "text" : `측정시간 : ${measuredTimeAirPollution.getFullYear()}년 ${integerStringFilter(measuredTimeAirPollution.getMonth() + 1)}월 ${integerStringFilter(measuredTimeAirPollution.getDate())}일 ${integerStringFilter(measuredTimeAirPollution.getHours())} : ${integerStringFilter(measuredTimeAirPollution.getMinutes())} : ${integerStringFilter(measuredTimeAirPollution.getSeconds())}\n데이터 출처 : https://openweathermap.org/`,
                     "fields" : [
@@ -151,9 +151,20 @@ const preprocessTextBox = async() => {
             const [ cityName, returnValue ] = x
             return textBox(cityName.toLowerCase(),returnValue)
         })))
-        await Promise.all(Object.entries(config.weather_hooks_endpoints).map(x => {
+        await Promise.all(Object.entries(config.region_weather_hooks_endpoints).map(x => {
             const [ endpoint, region ] = x
             return axios.post(endpoint,regionMapper.get(region.toLowerCase()))
+        }))
+
+        // Custom Region Mapper
+        // Bind endpoint as key : For prevention of locale_name collision,
+        const customs = await Promise.all(Object.entries(config.custom_weather_hooks_endpoints).map(x => {
+            const [endpoint, custombox] = x
+            return getWeatherInfo(endpoint,custombox)
+        }))
+        await Promise.all(customs.map(x => {
+            const [ endpoint, customs ] = x
+            return axios.post(endpoint,textBox(endpoint,customs)[1])
         }))
     }catch(err){
         console.error(err)

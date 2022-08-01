@@ -1,6 +1,11 @@
 const axios = require('axios')
 const config = require('./config.json')
 
+/**
+ * 
+ * @param {*} aqi : Filter AQI Number Value based on https://openweathermap.org/api/air-pollution
+ * @returns 
+ */
 const getAQIValue = async (aqi) => {
     switch(aqi){
         case 1:
@@ -13,12 +18,12 @@ const getAQIValue = async (aqi) => {
             return "나쁨"
         case 5:
             return "매우나쁨"
-        case 6:
+        default:
             return "Unknow AQI Value"
     }
 }
 
-const getAirPollutionInfo = async (cityName,lat,lon) => {
+const getAirPollutionInfo = async (lat,lon) => {
     try{
         const reqParam = {
             lat: lat,
@@ -48,14 +53,28 @@ const getAirPollutionInfo = async (cityName,lat,lon) => {
     }
 }
 
-const getWeatherInfo = async (cityName="seoul") => {
+/**
+ * 
+ * @param {*} key : 
+ * @param {*} customOption : Only for customized option
+ * @returns 
+ */
+const getWeatherInfo = async (key="seoul",customOption=false) => {
     // Get longtitude, latitude, locale_name(as korean) infos
-    const locationRes = await getLongLatInfo(cityName);
-    try{
-        locationRes.code
-        ? (() => {throw new Error()})()
-        :true
-        const { locale_name,lat,lon } = locationRes.data
+    try{    
+        const { locale_name,lat,lon } = customOption
+        ? (() => {
+            const [locale_name,lat,lon] = customOption
+            return {
+                locale_name: locale_name,
+                lat: lat,
+                lon: lon
+            }
+        })()
+        : await (async () => {
+            const locationRes = await getLongLatInfo(key);
+            return locationRes.code ? new Error() : locationRes.data
+        })()
         const reqParam = {
             lat: lat,
             lon: lon,
@@ -95,7 +114,7 @@ const getWeatherInfo = async (cityName="seoul") => {
         } = res.data
         // Basic data capsule
         // measuredTime : Unix Time -> Need to multiply 1000 for converting to JS Date obj
-        const airStatus = await getAirPollutionInfo(cityName,lat,lon);
+        const airStatus = await getAirPollutionInfo(lat,lon);
         const returnValue = {
             code: 0,
             data: {
@@ -144,11 +163,11 @@ const getWeatherInfo = async (cityName="seoul") => {
             returnValue.data.snow_per_hour = snowPerHour
         })()
         :true
-        return [cityName,returnValue]
+        return [key,returnValue]
     }catch(err){
-        console.error(err)
+        console.error(err.data)
         // If fail
-        return [cityName,{
+        return [key,{
             code: 1
         }]
     }
@@ -174,13 +193,13 @@ const getLongLatInfo = async (cityName) => {
         return {
             code: 0,
             data: {
-                locale_name: ko,
+                locale_name: ko + "시",
                 lat: lat,
                 lon: lon
             }
         }
     }catch(err){
-        console.error(err)
+        console.error(err.data)
         // If fail
         return {
             code: 1
@@ -194,4 +213,4 @@ const getAllSupportedRegion = async() => {
 }
 
 
-module.exports = { getAllSupportedRegion }
+module.exports = { getAllSupportedRegion, getWeatherInfo }

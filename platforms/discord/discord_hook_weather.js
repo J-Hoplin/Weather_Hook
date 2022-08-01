@@ -1,7 +1,7 @@
 const discord = require('discord.js')
 const axios = require('axios')
 const schedule = require('node-schedule')
-const { getAllSupportedRegion } = require('../../Hooks/data')
+const { getAllSupportedRegion,getWeatherInfo } = require('../../Hooks/data')
 const config = require('./config.json')
 
 const addZeroUnderTen = (number) => {
@@ -24,7 +24,7 @@ const buildEmbedJSONByRegion = (dataBox) => {
         const JSONform = {
             "embeds" : [
                 {
-                    "title": `${data.locale_name}시 현재 날씨정보`,
+                    "title": `${data.locale_name} 현재 날씨정보`,
                     "description" : `측정시간 : ${addZeroUnderTen(measureTimeToDate.getFullYear())}년 ${addZeroUnderTen(measureTimeToDate.getMonth() + 1)}월 ${addZeroUnderTen(measureTimeToDate.getDate())}일 ${addZeroUnderTen(measureTimeToDate.getHours())} : ${addZeroUnderTen(measureTimeToDate.getMinutes())} : ${addZeroUnderTen(measureTimeToDate.getSeconds())}`,
                     "color" : 16776960,
                     "thumbnail" : {
@@ -87,7 +87,7 @@ const buildEmbedJSONByRegion = (dataBox) => {
                     }
                 },
                 {
-                    "title": `${data.locale_name}시 현재 대기정보`,
+                    "title": `${data.locale_name} 현재 대기정보`,
                     "description" : `측정시간 : ${addZeroUnderTen(measuredTimeAirPollution.getFullYear())}년 ${addZeroUnderTen(measuredTimeAirPollution.getMonth() + 1)}월 ${addZeroUnderTen(measuredTimeAirPollution.getDate())}일 ${addZeroUnderTen(measuredTimeAirPollution.getHours())} : ${addZeroUnderTen(measuredTimeAirPollution.getMinutes())} : ${addZeroUnderTen(measuredTimeAirPollution.getSeconds())}`,
                     "color" : 16776960,
                     "fields" : [
@@ -148,7 +148,7 @@ const buildEmbedJSONByRegion = (dataBox) => {
                     "fields" : [
                         {
                             "name" : "아래와 같은 이유로 오류가 발생할 수 있습니다.",
-                            "value" : "1. API키가 만료되었거나 손상됨\n2. 잘못된 Discord Web Hook 링크\n3. 지원하지 않는 지역"
+                            "value" : "1. API키가 만료되었거나 손상됨\n2. 잘못된 Discord Web Hook 링크\n3. 지원하지 않는 지역\n4. 잘못된 좌표값 설정"
                         }
                     ],
                     "footer" : {
@@ -162,19 +162,39 @@ const buildEmbedJSONByRegion = (dataBox) => {
     
 }
 
+const scheduledTask = async () => {
+    try{
+        const regionDatas = await getAllSupportedRegion()
+        const now = new Date();
+        // Region Mapper
+        const regionMapper = new Map(await Promise.all(regionDatas.map(x => {
+            const [cityName, returnValue] = x
+            return [ cityName, buildEmbedJSONByRegion(returnValue) ]
+        })))
+        await Promise.all(Object.entries(config.region_weather_hooks_endpoints).map(x => {
+            const [ endpoint, region ] = x
+            return axios.post(endpoint,regionMapper.get(region))
+        }))
+
+        // Custom Region Mapper
+        // Bind endpoint as key : For prevention of locale_name collision,
+        const customs = await Promise.all(Object.entries(config.custom_weather_hooks_endpoints).map(x => {
+            const [endpoint, custombox] = x
+            return getWeatherInfo(endpoint,custombox)
+        }))
+        await Promise.all(customs.map(x => {
+            const [ endpoint, customs ] = x
+            return axios.post(endpoint, buildEmbedJSONByRegion(customs))
+        }))
+    }catch(err){
+        console.error(err)
+    }
+}
+
 const scheduler = async() => {
     try{
         const scheduleObject = schedule.scheduleJob(config.scheduler_expression, async() => {
-            const regionDatas = await getAllSupportedRegion()
-            const now = new Date();
-            const regionMapper = new Map(await Promise.all(regionDatas.map(x => {
-                const [cityName, returnValue] = x
-                return [ cityName, buildEmbedJSONByRegion(returnValue) ]
-            })))
-            await Promise.all(Object.entries(config.weather_hooks_endpoints).map(x => {
-                const [ endpoint, region ] = x
-                return axios.post(endpoint,regionMapper.get(region))
-            }))
+            await scheduledTask()
         })
     }catch(err){
         console.error(err)
