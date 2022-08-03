@@ -151,21 +151,21 @@ const preprocessTextBox = async() => {
             const [ cityName, returnValue ] = x
             return textBox(cityName.toLowerCase(),returnValue)
         })))
-        await Promise.all(Object.entries(config.region_weather_hooks_endpoints).map(x => {
-            const [ endpoint, region ] = x
-            return axios.post(endpoint,regionMapper.get(region.toLowerCase()))
-        }))
-
         // Custom Region Mapper
         // Bind endpoint as key : For prevention of locale_name collision,
         const customs = await Promise.all(Object.entries(config.custom_weather_hooks_endpoints).map(x => {
             const [endpoint, custombox] = x
             return getWeatherInfo(endpoint,custombox)
         }))
-        await Promise.all(customs.map(x => {
+
+        await Promise.all([ 
+            ...Object.entries(config.region_weather_hooks_endpoints).map(x => {
+            const [ endpoint, region ] = x
+            return axios.post(endpoint,regionMapper.get(region.toLowerCase()))
+        }),...customs.map(x => {
             const [ endpoint, customs ] = x
             return axios.post(endpoint,textBox(endpoint,customs)[1])
-        }))
+        })])
     }catch(err){
         console.error(err)
     }
