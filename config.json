@@ -1,0 +1,51 @@
+{
+    "hooks" : {
+        "api_endpoint" : "https://api.openweathermap.org/data/2.5/weather",
+        "api_endpoint_air_pollution" : "http://api.openweathermap.org/data/2.5/air_pollution",
+        "geo_coding_api_endpoint" : "http://api.openweathermap.org/geo/1.0/direct",
+        "api_key" : "your_openweathermap_api_key",
+        "supported_region" : [ 
+            "seoul", 
+            "daejeon", 
+            "sejong", 
+            "busan", 
+            "changwon", 
+            "paju", 
+            "jeju", 
+            "jeonju", 
+            "daegu", 
+            "pohang", 
+            "chuncheon", 
+            "sokcho", 
+            "gapyeong", 
+            "gangneung", 
+            "goyang", 
+            "incheon", 
+            "cheonan", 
+            "suwon", 
+            "wonju",
+            "gwangju", 
+            "yeosu", 
+            "gumi", 
+            "pyeongtaek" 
+        ]
+    },
+    "discord" : {
+        "scheduler_expression":"0/10 * * * * *",
+        "region_weather_hooks_endpoints" : {
+            "your_discord_webhook_url" : "region"
+        },
+        "custom_weather_hooks_endpoints" : {
+            "your_discord_webhook_url" : ["Nickname of the place","lat", "lon"]
+        }
+    },
+    "slack" : {
+        "scheduler_expression":"0/10 * * * * *",
+        "region_weather_hooks_endpoints" : {
+            "your_slack_webhook_url" : "region"
+        },
+        "custom_weather_hooks_endpoints" : {
+            "your_slack_webhook_url" : ["Nickname of the place","lat", "lon"]
+        }
+    }
+}

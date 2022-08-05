@@ -1,9 +1,0 @@
-{
-    "scheduler_expression":"0/10 * * * * *",
-    "region_weather_hooks_endpoints" : {
-        "your_discord_webhook_url" : "region"
-    },
-    "custom_weather_hooks_endpoints" : {
-        "your_discord_webhook_url" : ["Nickname of the place","lat", "lon"]
-    }
-}

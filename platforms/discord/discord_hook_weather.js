@@ -2,7 +2,7 @@ const discord = require('discord.js')
 const axios = require('axios')
 const schedule = require('node-schedule')
 const { getAllSupportedRegion,getWeatherInfo } = require('../../Hooks/data')
-const config = require('./config.json')
+const config = require('../../config.json').discord
 
 const addZeroUnderTen = (number) => {
     try{
@@ -171,21 +171,24 @@ const scheduledTask = async () => {
             const [cityName, returnValue] = x
             return [ cityName, buildEmbedJSONByRegion(returnValue) ]
         })))
-        await Promise.all(Object.entries(config.region_weather_hooks_endpoints).map(x => {
-            const [ endpoint, region ] = x
-            return axios.post(endpoint,regionMapper.get(region))
-        }))
-
         // Custom Region Mapper
         // Bind endpoint as key : For prevention of locale_name collision,
         const customs = await Promise.all(Object.entries(config.custom_weather_hooks_endpoints).map(x => {
             const [endpoint, custombox] = x
             return getWeatherInfo(endpoint,custombox)
         }))
-        await Promise.all(customs.map(x => {
-            const [ endpoint, customs ] = x
-            return axios.post(endpoint, buildEmbedJSONByRegion(customs))
-        }))
+
+        await Promise.all([
+            ...Object.entries(config.region_weather_hooks_endpoints).map(x => {
+                const [ endpoint, region ] = x
+                return axios.post(endpoint,regionMapper.get(region))
+            }),
+            ...customs.map(x => {
+                const [ endpoint, customs ] = x
+                return axios.post(endpoint, buildEmbedJSONByRegion(customs))
+            })
+        ])
+
     }catch(err){
         console.error(err)
     }
