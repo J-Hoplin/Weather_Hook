@@ -12,6 +12,33 @@ Weather Hook for Discord and Slack
   - Discord : axios, node-schedule,discord.js
   - Slack : axios, node-schedule
 
+***
+## How to use?
+
+1. Git Clone
+
+  ```bash
+  git clone https://github.com/J-hoplin1/Weather_Hook.git && Weather_Hook
+  ```
+
+2. Configure step by step, refer to ["Required and Settings"](https://github.com/J-hoplin1/Weather_Hook#required-and-settings) under below
+
+3. Install dependencies
+
+  ```bash
+  npm run build-env
+  ```
+
+4. Execute bot
+
+  ```bash
+  # Discord
+  npm run execute-discord
+
+  #Slack
+  npm run execute-slack
+  ```
+***
 ## Required and Settings
 
 **하나의 Web Hook URL당 최대 도시 기반 날씨대기정보 1개, 좌표기반 날씨 대기정보 1개만 허용이 됩니다**
