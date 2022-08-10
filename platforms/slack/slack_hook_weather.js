@@ -1,7 +1,7 @@
 const schedule = require('node-schedule')
 const axios = require('axios')
-const config = require('./config.json')
-const common = require('../../config.json').slack
+const common = require('../common.json')
+const config = require('../../config.json').slack
 const { getAllSupportedRegion, getWeatherInfo } = require('../../Hooks/data')
 
 const textBox = (cityName,capsule) => {

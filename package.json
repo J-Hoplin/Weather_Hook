@@ -1,0 +1,26 @@
+{
+  "name": "weather_hook",
+  "version": "1.0.0",
+  "description": "Weather Hook for Discord and Slack",
+  "main": "index.js",
+  "scripts": {
+    "install-discord" : "cd platforms/discord && npm install",
+    "install-slack" : "cd platforms/slack && npm install",
+    "install-all" : "npm run install-discord && npm run install-slack",
+    "install-Hooks" : "cd Hooks && npm install",
+    "build-env" : "cd Hooks && npm install && cd ../ && npm run install-all",
+    "execute-discord" : "cd platforms/discord && node discord_hook_weather",
+    "execute-slack" : "cd platforms/slack && node slack_hook_weather"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/J-hoplin1/Weather_Hook.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/J-hoplin1/Weather_Hook/issues"
+  },
+  "homepage": "https://github.com/J-hoplin1/Weather_Hook#readme"
+}
