@@ -18,7 +18,7 @@ Weather Hook for Discord and Slack
 1. Git Clone
 
   ```bash
-  git clone https://github.com/J-hoplin1/Weather_Hook.git && Weather_Hook
+  git clone https://github.com/J-hoplin1/Weather_Hook.git && cd Weather_Hook
   ```
 
 2. Configure step by step, refer to ["Required and Settings"](https://github.com/J-hoplin1/Weather_Hook#required-and-settings) under below
