@@ -3,7 +3,7 @@
         "api_endpoint" : "https://api.openweathermap.org/data/2.5/weather",
         "api_endpoint_air_pollution" : "http://api.openweathermap.org/data/2.5/air_pollution",
         "geo_coding_api_endpoint" : "http://api.openweathermap.org/geo/1.0/direct",
-        "api_key" : "c4c8d1d6bd0625dda14016bdc1ea6627",
+        "api_key" : "",
         "supported_region" : [ 
             "seoul", 
             "daejeon", 
