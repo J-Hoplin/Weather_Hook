@@ -1,4 +1,3 @@
-const discord = require('discord.js')
 const axios = require('axios')
 const schedule = require('node-schedule')
 const { getAllSupportedRegion,getWeatherInfo } = require('../../Hooks/data')
