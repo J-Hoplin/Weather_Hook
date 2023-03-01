@@ -9,8 +9,8 @@
     "install-all": "npm run install-discord && npm run install-slack",
     "install-Hooks": "cd Hooks && npm install",
     "build-env": "cd Hooks && npm install && cd ../ && npm run install-all",
-    "execute-discord": "cd platforms/discord && node discord_hook_weather",
-    "execute-slack": "cd platforms/slack && node slack_hook_weather"
+    "discord": "cd platforms/discord && node discord_hook_weather",
+    "slack": "cd platforms/slack && node slack_hook_weather"
   },
   "repository": {
     "type": "git",
