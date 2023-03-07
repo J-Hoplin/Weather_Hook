@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Today, airPollutionInfo, airPollutionResult, SpecifiedRegion, GeoQueryParam, weatherQueryParam, WeatherResult } from '../types'
-import { apiEndpoints, regions } from "../constant"
+import { apiEndpoints, regions, regionKeys } from "../constant"
 import { AbnormalResponse } from "../error"
 import ErrorHandler from '../decorator/errorHandler'
 import logger from '../log/logger'
@@ -28,7 +28,7 @@ class Weather {
     }
 
     @ErrorHandler
-    public async getLonLatLocaleInfo(cityname: regions): Promise<SpecifiedRegion> {
+    public async getLonLatLocaleInfo(cityname: regionKeys): Promise<SpecifiedRegion> {
         cityname = cityname.toLowerCase() as regions
         const param: GeoQueryParam = {
             q: cityname,
@@ -64,11 +64,12 @@ class Weather {
             },
             dt
         } = datas
+        const filteredAQI = await this.getAQIValue(aqi)
         const result: airPollutionResult = {
             co,
             pm2_5,
             pm10,
-            aqi,
+            aqi: filteredAQI,
             measuredTime_airpollution: dt
         }
         return result
@@ -124,7 +125,6 @@ class Weather {
         } = datas
 
         const airStatus: airPollutionResult = await this.getAirPollutionInformation(airPollutionInfo(lat, lon))
-
         const result: WeatherResult = {
             locale_name: locale_name,
             weather: weather,
@@ -166,11 +166,12 @@ class Weather {
     }
 
     @ErrorHandler
-    public async getWeatherNAirInformation(regionOrAxis: SpecifiedRegion | regions): Promise<Today> {
+    public async getWeatherNAirInformation(regionOrAxis: SpecifiedRegion | regionKeys): Promise<Today> {
         /**
          * SpecifiedRegion -> Object
          */
         let locationInfo: SpecifiedRegion
+        logger.debug(regionOrAxis)
         if (typeof regionOrAxis === 'string') {
             locationInfo = await this.getLonLatLocaleInfo(regionOrAxis)
         }
@@ -180,6 +181,7 @@ class Weather {
         else {
             locationInfo = regionOrAxis
         }
+        logger.debug(locationInfo)
         const weather: WeatherResult = await this.getWeatherInformation(locationInfo);
         const airpollution: airPollutionResult = await this.getAirPollutionInformation(airPollutionInfo(locationInfo.lat, locationInfo.lon))
         const result: Today = {

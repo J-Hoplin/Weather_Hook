@@ -2,13 +2,16 @@ import logger from "../log/logger";
 
 function ErrorHandler(classPrototype: any, methodName: string, descriptor: PropertyDescriptor) {
     const method = descriptor.value;
-    descriptor.value = function () {
+    descriptor.value = function (...args: any[]) {
         try {
-            method()
+            let result = method.apply(classPrototype, args)
+            return result
         } catch (err) {
+            console.error(err)
             logger.error(err)
         }
     }
+    return descriptor
 }
 
 export default ErrorHandler;

@@ -4,16 +4,16 @@ interface WeatherResult {
     weather_icon: string
     description: string
     temperature: number,
-    temperature_humanfeel: string
+    temperature_humanfeel: number
     temp_min: number
     temp_max: number
     pressure: number
     humidity: number
     windspeed: number
     cloudpercentage: number
-    sunrise: string
-    sunset: string
-    measuredTime: string
+    sunrise: number
+    sunset: number
+    measuredTime: number
     rain_per_hour?: number
     snow_per_hour?: number
 }

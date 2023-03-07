@@ -24,6 +24,4 @@ const enum regions {
     pyeongtaek = "pyeongtaek"
 }
 
-type log = keyof typeof regions
-
 export default regions
