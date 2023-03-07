@@ -1,4 +1,4 @@
-Weather Hook for Discord and Slack
+Weather Hook for Discord
 ===
 ***
 **[Discord](https://discord.com/) 플랫폼을 위한 날씨/대기 정보 웹훅 애플리케이션 소스코드입니다**
