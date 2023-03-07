@@ -45,6 +45,29 @@ Weather Hook for Discord
         ]
         ...
         ```
+    
+    - JSON under below is example of config file
+        ```json
+        {
+            "scheduler": "0 */4 * * *",
+            "region": [
+                {
+                    "hook": "hook endpoint",
+                    "region": "seoul"
+                }
+            ],
+            "specified": [
+                {
+                    "hook": "hook endpoint",
+                    "location": [
+                        36.6210720,
+                        127.2868270,
+                        "school"
+                    ]
+                }
+            ]
+        }
+        ```
 3.  Build docker
     ```bash
     docker build -t (image name) .
