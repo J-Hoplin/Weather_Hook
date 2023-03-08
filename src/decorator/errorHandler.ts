@@ -9,6 +9,7 @@ function ErrorHandler(classPrototype: any, methodName: string, descriptor: Prope
         } catch (err) {
             console.error(err)
             logger.error(err)
+            return false
         }
     }
     return descriptor

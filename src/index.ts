@@ -24,7 +24,7 @@ function scheduler() {
     try {
         const schedule = scheduleJob(cron, async () => {
             logger.info("Task now running...")
-            task()
+            await task()
             logger.info("Task end...")
         })
     } catch (err) {
