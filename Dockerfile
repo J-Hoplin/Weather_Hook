@@ -1,6 +1,7 @@
 FROM node
 
-RUN mkdir app
+RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime\
+    && mkdir app
 
 WORKDIR /app
 COPY . .

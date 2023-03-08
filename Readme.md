@@ -75,7 +75,7 @@ Weather Hook for Discord
 4. Run docker container. **Be aware that you need Openweather map API key in this step**
 
     - Mountable container volume
-        - /app/dist/logfile : logfiles
+        - /app/dist/logfile : logfiles directory
 
     ```bash
     docker run -d --name (container name) -e OPENWEATHER_API_KEY='(your openweathermap API Key)' -v (location you want to mount):/app/dist/logfile (image name)
